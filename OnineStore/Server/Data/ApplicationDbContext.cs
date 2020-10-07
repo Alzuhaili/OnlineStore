@@ -65,6 +65,12 @@ namespace OnineStore.Server.Data
                 .WithOne(c => c.Product)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<OrderDetails>().HasKey(c=>new { c.OrderId,c.ProductId});
+            builder.Entity<OrderProduct>().HasKey(c => new { c.ProductId, c.OrderId });
+            builder.Entity<ProductOption>().HasKey(c => new { c.ProductId, c.OptionId });
+
+            builder.Entity<Order>().Property(o => o.Amount).HasPrecision(5, 4); // 54785.4561
+
             base.OnModelCreating(builder);
         }
     }
